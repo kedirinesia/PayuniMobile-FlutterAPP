@@ -1,0 +1,40 @@
+name: payuniapp
+description: "A new Flutter project."
+publish_to: 'none' # Prevent accidental publishing to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_lints: ^5.0.0
+  shared_preferences: ^2.1.1
+  http: ^0.13.6
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/aman.png
+    - assets/harga.png
+    - assets/terpercaya.png
+    - assets/logo.png
+
+# Untuk font custom bisa ditambahkan di bagian fonts di bawah ini (jika diperlukan)
+# fonts:
+#   - family: Schyler
+#     fonts:
+#       - asset: fonts/Schyler-Regular.ttf
+#       - asset: fonts/Schyler-Italic.ttf
+#         style: italic
