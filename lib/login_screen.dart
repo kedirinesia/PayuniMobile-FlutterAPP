@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'OTPverification.dart';
+import 'RegisterScreen.dart'; // Pastikan file ini ada dan benar penamaannya
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -76,7 +77,6 @@ class _LoginScreenState extends State<LoginScreen> {
         await _saveCredentials(phone, pin);
         final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('is_logged_in', true);
-
 
         final loginValidateId = data['data']['validate_id'] as String? ?? '';
         final phoneNumber = data['data']['phone'] as String? ?? phone;
@@ -199,6 +199,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: _isLoading
                           ? const CircularProgressIndicator(color: Colors.white)
                           : const Text('MASUK', style: TextStyle(fontSize: 16, color: Colors.white)),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                      );
+                    },
+                    child: const Text(
+                      'Belum punya akun? Daftar',
+                      style: TextStyle(color: Colors.blue),
                     ),
                   ),
                 ],

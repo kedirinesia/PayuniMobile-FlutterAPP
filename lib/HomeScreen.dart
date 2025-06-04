@@ -279,22 +279,25 @@ class _HomeScreenState extends State<HomeScreen> {
                         backgroundColor: Colors.white,
                         foregroundColor: Colors.black,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
                       ),
                       onPressed: () {},
                       child: Text('Payuni Points ($poin)'),
-
                     ),
-                    Row(
-                      children: const [
-                        _ActionIcon(icon: Icons.add_circle_outline, label: 'Top Up'),
-                        _ActionIcon(icon: Icons.send, label: 'Transfer'),
-                        _ActionIcon(icon: Icons.qr_code, label: 'QRIS'),
-                        _ActionIcon(icon: Icons.history, label: 'History'),
-                      ],
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          _ActionIcon(icon: Icons.add_circle_outline, label: 'Top Up'),
+                          _ActionIcon(icon: Icons.send, label: 'Transfer'),
+                          _ActionIcon(icon: Icons.qr_code, label: 'QRIS'),
+                          _ActionIcon(icon: Icons.history, label: 'History'),
+                        ],
+                      ),
                     ),
                   ],
-                ),
+                )
+
               ],
             ),
           ),
@@ -361,35 +364,117 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildRiwayat() => const Center(child: Text('Riwayat Transaksi'));
-  Widget _buildProfil() => Padding(
-    padding: const EdgeInsets.all(16),
+  Widget _buildProfil() => SingleChildScrollView(
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 20),
-        const Text('Profil', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        const Divider(),
-        ListTile(title: Text(nama), subtitle: Text(phone), leading: const Icon(Icons.person)),
-        ListTile(title: const Text('Email'), subtitle: Text(email), leading: const Icon(Icons.email)),
-        ListTile(title: const Text('Saldo'), subtitle: Text('Rp$saldo'), leading: const Icon(Icons.wallet)),
-        ListTile(title: const Text('Poin'), subtitle: Text('$poin poin'), leading: const Icon(Icons.star)),
-        ListTile(title: const Text('Komisi'), subtitle: Text('Rp$komisi'), leading: const Icon(Icons.money)),
-        const SizedBox(height: 16),
-        Center(
-          child: ElevatedButton.icon(
-            onPressed: _logout,
-            icon: const Icon(Icons.logout),
-            label: const Text('Logout'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        Container(
+          height: 180,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF7B61FF), Color(0xFF9D4DFF)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          alignment: Alignment.topLeft,
+          child: const Text(
+            'Profile',
+            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Transform.translate(
+          offset: const Offset(0, -50),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade300,
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.yellow.shade100,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: const Icon(Icons.verified_user, size: 40, color: Colors.orange),
+                ),
+                const SizedBox(height: 8),
+                Text(nama, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text(phone, style: const TextStyle(color: Colors.grey)),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.green.shade100,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Text(
+                    'Premium User',
+                    style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _infoItem('Saldo', 'Rp ${saldo.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}',
+                        Colors.pink),
+                    _infoItem('Komisi', 'Rp $komisi', Colors.purple),
+                    _infoItem('Poin', '$poin Pts', Colors.orange),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 40),
+        ElevatedButton.icon(
+          onPressed: _logout,
+          icon: const Icon(Icons.logout),
+          label: const Text('Logout'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           ),
         ),
       ],
     ),
   );
+  Widget _infoItem(String title, String value, Color color) {
+    return Column(
+      children: [
+        Icon(Icons.account_balance_wallet, color: color),
+        const SizedBox(height: 4),
+        Text(
+          title,
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+        ),
+        Text(
+          value,
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: color),
+        ),
+      ],
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
