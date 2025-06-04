@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'ForgotPasswordScreen.dart';
 import 'OTPverification.dart';
 import 'RegisterScreen.dart'; // Pastikan file ini ada dan benar penamaannya
 
@@ -186,6 +187,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       const Text('Remember Me'),
                     ],
                   ),
+
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()),
+                        );
+                      },
+                      child: const Text(
+                        'Lupa Kata Sandi?',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+
+
+
                   const SizedBox(height: 32),
                   SizedBox(
                     width: double.infinity,
